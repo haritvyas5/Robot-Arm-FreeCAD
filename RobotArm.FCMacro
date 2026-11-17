@@ -1,0 +1,10 @@
+# FreeCAD entry point: all implementation is in robot_arm.py.
+from pathlib import Path  # Handles the path to this macro's folder.
+import sys, importlib  # sys finds our module; importlib reloads edits between runs.
+root = Path(__file__).resolve().parent  # Gets the folder containing this macro.
+sys.path.insert(0, str(root))  # Makes Python look here first for robot_arm.py.
+import robot_arm  # Loads our program; importing alone does not start the arm.
+if hasattr(robot_arm, "stop"):  # Check whether the loaded version has a stop function.
+    robot_arm.stop()  # Release its connection before reloading the module.
+importlib.reload(robot_arm)  # Reloads the file so edits take effect when rerun.
+robot_arm.launch()  # Opens the arm model and tries to connect to the Arduino.

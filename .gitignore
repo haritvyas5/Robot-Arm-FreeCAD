@@ -1,0 +1,7 @@
+.venv/
+.dependencies/
+__pycache__/
+*.pyc
+*.FCStd1
+*.FCBak
+.DS_Store
