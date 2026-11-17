@@ -79,3 +79,31 @@ Set your serial port, then run `Launch Robot Arm.command`. The Arduino IDE Seria
 The Arduino sketch and arm geometry come from [haritvyas5/Robot-Arm](https://github.com/haritvyas5/Robot-Arm). The FreeCAD model was made by separating the original STL into five components; source CAD mates and feature history were not imported. The original MIT copyright notice is retained in `LICENSE`. This repository supplies the separate local FreeCAD control implementation and Windows/Mac launchers.
 
 Mac serial-emulation checks passed during development. Real Arduino operation, physical calibration, and Windows execution still require verification.
+
+
+## Portable FreeCAD on Windows
+
+1. Download the official Windows portable `.7z` archive from [FreeCAD releases](https://github.com/FreeCAD/FreeCAD/releases) and extract the entire archive.
+2. Locate `FreeCAD.exe` in the extracted folder (often inside `bin`; the layout can vary).
+3. Open `Launch Robot Arm.bat` in a text editor and uncomment the `FREECAD_EXE` setting. Set it to the actual executable path, for example:
+
+```bat
+set "FREECAD_EXE=C:\Tools\FreeCAD\bin\FreeCAD.exe"
+```
+
+4. Keep this project in a writable folder, set `PORT` in `robot_arm.py` to the Arduino COM port, close Arduino Serial Monitor, then double-click the batch launcher.
+5. The launcher installs pyserial into the project’s `.dependencies` folder on first use. If the portable package has no usable Python installer, install Python 3 and run this command from the project folder:
+
+```bat
+py -3 -m pip install --target .dependencies pyserial==3.5
+```
+
+If you move the portable FreeCAD folder, update `FREECAD_EXE`. Alternatively, open the portable FreeCAD application and run `RobotArm.FCMacro` through Macro → Macros after installing the dependency. Portable Windows operation has not yet been tested with physical hardware.
+
+### macOS ZIP downloads
+
+If the command launcher is not executable after downloading the repository ZIP, open Terminal in the project folder and run:
+
+```sh
+chmod +x "Launch Robot Arm.command"
+```
